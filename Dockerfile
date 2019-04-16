@@ -1,12 +1,10 @@
 FROM node:10-alpine
 
-EXPOSE 80
-
 WORKDIR /app
 
-COPY ./package.json ./package-lock.json ./
-RUN npm install
+COPY server.js ./
 
-COPY . .
+ENV PORT 80
+EXPOSE 80
 
 CMD [ "node", "server.js" ]
