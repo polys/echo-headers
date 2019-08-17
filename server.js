@@ -16,7 +16,7 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    const nonce = crypto.randomBytes(18).toString('base64');
+    const nonce = crypto.randomBytes(12).toString('base64');
 
     const headers = JSON.stringify(req.headers, undefined, 2);
 
@@ -30,7 +30,6 @@ const server = http.createServer((req, res) => {
 </head>
 <body>
     <pre>${escapeHtml(headers)}</pre>
-    <a href="/.auth/me">/.auth/me</a>
 </body>
 </html>`;
 
@@ -41,7 +40,7 @@ const server = http.createServer((req, res) => {
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'deny',
         'X-XSS-Protection': '1; mode=block',
-        'Content-Security-Policy': `default-src 'self' 'nonce-${nonce}'; frame-ancestors 'none';`
+        'Content-Security-Policy': `default-src 'self'; style-src 'nonce-${nonce}'; frame-ancestors 'none';`
     });
 
     res.end(body);
